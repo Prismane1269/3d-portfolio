@@ -32,12 +32,13 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis
+    // Initialize Lenis with optimized mobile and desktop settings
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.5,
+      syncTouch: true,
+      touchMultiplier: 1.0,
       infinite: false,
     });
 
@@ -56,7 +57,8 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     };
 
     gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+    // Smooth over frame lag on low-end/mobile devices without sudden jumps
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
       lenis.off('scroll', handleScroll);

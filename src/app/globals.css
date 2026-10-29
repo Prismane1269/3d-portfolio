@@ -57,3 +57,29 @@ html.lenis, html.lenis body {
 ::-webkit-scrollbar-thumb:hover {
   background: #22d3ee;
 }
+
+/* Canvas container - zero interference with touch scrolling */
+.canvas-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  contain: strict;
+  transform: translateZ(0);
+}
+
+.canvas-container canvas {
+  pointer-events: none !important;
+}
+
+/* Fluid touch momentum scrolling */
+html, body {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure smooth hardware acceleration on animated cards */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0);
+}

@@ -257,7 +257,7 @@ export const ContactScene: React.FC<ContactSceneProps> = ({
       style={style}
     >
       <Canvas
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         gl={{
           antialias: true,
           alpha: true,
@@ -319,7 +319,7 @@ export const ContactScene: React.FC<ContactSceneProps> = ({
 
           {/* Subtle Bloom Effect */}
           {enableBloom && (
-            <EffectComposer multisampling={4}>
+            <EffectComposer multisampling={0}>
               <Bloom
                 luminanceThreshold={0.3}
                 luminanceSmoothing={0.85}

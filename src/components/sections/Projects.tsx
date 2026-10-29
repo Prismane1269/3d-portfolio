@@ -160,8 +160,9 @@ export default function Projects() {
     };
   }, []);
 
-  // 3D Tilt handlers
+  // 3D Tilt handlers (disabled on touch devices for fluid scrolling)
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -188,7 +189,7 @@ export default function Projects() {
       {/* Pinned Container for Horizontal Scroll */}
       <div
         ref={triggerRef}
-        className="relative w-full h-screen flex flex-col justify-between py-10 sm:py-14 overflow-hidden"
+        className="relative w-full h-[100dvh] min-h-[580px] flex flex-col justify-between py-6 sm:py-14 overflow-hidden"
       >
         {/* Section Header */}
         <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">

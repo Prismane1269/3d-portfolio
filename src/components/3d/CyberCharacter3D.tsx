@@ -205,7 +205,7 @@ export default function CyberCharacter3D({
     <div className={`relative ${className}`}>
       <Canvas
         camera={{ position: [0, 0, 4.8], fov: 42 }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
       >
         <ambientLight intensity={0.8} />

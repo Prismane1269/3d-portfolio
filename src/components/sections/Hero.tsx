@@ -141,7 +141,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative w-full h-screen min-h-[680px] overflow-hidden flex flex-col justify-between bg-black text-white select-none"
+      className="relative w-full h-[100dvh] min-h-[600px] overflow-hidden flex flex-col justify-between bg-black text-white select-none"
     >
       {/* 3D Scene placeholder */}
       <div

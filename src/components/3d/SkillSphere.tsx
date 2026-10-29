@@ -308,7 +308,7 @@ export const SkillSphere: React.FC<SkillSphereProps> = ({
       {/* 3D Canvas */}
       <div className="w-full h-full">
         <Canvas
-          dpr={[1, 2]}
+          dpr={[1, 1.5]}
           gl={{ antialias: true, alpha: true }}
           camera={{ position: [0, 0, 8.8], fov: 45 }}
         >

@@ -157,6 +157,8 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({
   // Scratch objects for zero-allocation per frame
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const mouse3D = useRef(new THREE.Vector3(9999, 9999, 9999));
+  const invMatrixRef = useRef(new THREE.Matrix4());
+  const localMouseRef = useRef(new THREE.Vector3());
   const internalScroll = useRef(0);
   const smoothScroll = useRef(0);
 
@@ -234,17 +236,22 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({
       groupRef.current.rotation.z = Math.cos(state.clock.getElapsedTime() * 0.15) * 0.08;
     }
 
-    // Inverse transform mouse into local group space for precise repulsion
-    const invMatrix = groupRef.current ? groupRef.current.matrixWorld.clone().invert() : new THREE.Matrix4();
-    const localMouse = mouse3D.current.clone().applyMatrix4(invMatrix);
+    // Inverse transform mouse into local group space using pre-allocated matrix (0 allocations)
+    const localMouse = localMouseRef.current;
+    if (groupRef.current) {
+      invMatrixRef.current.copy(groupRef.current.matrixWorld).invert();
+      localMouse.copy(mouse3D.current).applyMatrix4(invMatrixRef.current);
+    }
 
     const { basePositions, currentPositions, velocities, scales, phases } = particlesRef.current;
     const time = state.clock.getElapsedTime();
-    const dt = Math.min(delta, 0.1);
+    const dt = Math.min(delta, 0.05);
 
     // Spring and damping physics
     const spring = 4.5;
     const damping = 0.88;
+    const hasActiveMouse = interactive && mouse3D.current.x < 5000;
+    const radiusSq = mouseRadius * mouseRadius;
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
@@ -256,30 +263,27 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({
       const by = basePositions[i3 + 1];
       const bz = basePositions[i3 + 2];
 
-      // Subtle dynamic breathing pulse
-      const breathe = 1 + Math.sin(time * 1.5 + phases[i]) * 0.04;
+      // Dynamic breathing pulse
+      const breathe = 1 + Math.sin(time * 1.5 + phases[i]) * 0.035;
       const targetX = bx * breathe;
-      const targetY = by + Math.sin(time * 0.8 + phases[i]) * 0.15;
+      const targetY = by + Math.sin(time * 0.8 + phases[i]) * 0.12;
       const targetZ = bz * breathe;
 
-      // Mouse repulsion in local space
-      if (interactive) {
+      // Mouse repulsion in local space (only calculated when pointer is active on screen)
+      if (hasActiveMouse) {
         const dx = px - localMouse.x;
         const dy = py - localMouse.y;
         const dz = pz - localMouse.z;
         const distSq = dx * dx + dy * dy + dz * dz;
-        const radiusSq = mouseRadius * mouseRadius;
 
         if (distSq < radiusSq && distSq > 0.001) {
           const dist = Math.sqrt(distSq);
           const force = (1 - dist / mouseRadius) * repelStrength * 12;
-          const nx = dx / dist;
-          const ny = dy / dist;
-          const nz = dz / dist;
+          const invDist = 1 / dist;
 
-          velocities[i3] += nx * force * dt;
-          velocities[i3 + 1] += ny * force * dt;
-          velocities[i3 + 2] += nz * force * dt;
+          velocities[i3] += dx * invDist * force * dt;
+          velocities[i3 + 1] += dy * invDist * force * dt;
+          velocities[i3 + 2] += dz * invDist * force * dt;
         }
       }
 

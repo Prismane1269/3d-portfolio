@@ -157,16 +157,20 @@ export const HeroScene: React.FC<HeroSceneProps> = ({
     );
   }
 
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+  const particleCount = isMobile ? 900 : 2200;
+  const starCount = isMobile ? 1200 : 3000;
+  const targetDpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, isMobile ? 1.25 : 1.5);
+
   return (
     <div
       className={`relative w-full h-full bg-[#0a0a0a] overflow-hidden ${className}`}
       style={style}
     >
       <Canvas
-        shadows
-        dpr={[1, 2]}
+        dpr={targetDpr}
         gl={{
-          antialias: true,
+          antialias: !isMobile,
           alpha: false,
           powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -185,42 +189,44 @@ export const HeroScene: React.FC<HeroSceneProps> = ({
           <Stars
             radius={60}
             depth={50}
-            count={3500}
-            factor={4}
-            saturation={0.5}
+            count={starCount}
+            factor={3.5}
+            saturation={0.4}
             fade
-            speed={1.2}
+            speed={1.0}
           />
 
           {/* Central Animated Galaxy Particle Field */}
           <ParticleField
-            count={2800}
+            count={particleCount}
             radius={13}
             arms={3}
-            speed={0.4}
-            mouseRadius={3.0}
-            repelStrength={1.9}
+            speed={0.35}
+            mouseRadius={2.8}
+            repelStrength={1.8}
             interactive={interactive}
           />
 
           {/* Floating Geometric Elements with Distort and Wireframe variants */}
-          <FloatingGeometry scale={1} parallaxIntensity={1.3} interactive={interactive} />
+          <FloatingGeometry scale={isMobile ? 0.8 : 1} parallaxIntensity={isMobile ? 0.7 : 1.3} interactive={interactive} />
 
-          {/* Post Processing Effects */}
+          {/* Post Processing Effects - Adaptive for 60-120fps Mobile & Desktop */}
           {enablePostProcessing && (
-            <EffectComposer multisampling={4}>
+            <EffectComposer multisampling={isMobile ? 0 : 2}>
               <Bloom
-                luminanceThreshold={0.25}
-                luminanceSmoothing={0.9}
-                intensity={1.2}
-                mipmapBlur
+                luminanceThreshold={0.3}
+                luminanceSmoothing={0.85}
+                intensity={isMobile ? 0.8 : 1.1}
+                mipmapBlur={!isMobile}
               />
-              <ChromaticAberration
-                offset={new THREE.Vector2(0.0012, 0.0012)}
-                radialModulation={false}
-                modulationOffset={0.15}
-              />
-              <Vignette eskil={false} offset={0.12} darkness={1.05} />
+              {!isMobile && (
+                <ChromaticAberration
+                  offset={new THREE.Vector2(0.001, 0.001)}
+                  radialModulation={false}
+                  modulationOffset={0.15}
+                />
+              )}
+              <Vignette eskil={false} offset={0.15} darkness={0.95} />
             </EffectComposer>
           )}
         </Suspense>
