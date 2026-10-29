@@ -15,13 +15,13 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Taseen — Creative Developer & 3D Artist",
+  title: "Creative Developer & 3D Web Artist",
   description:
-    "Portfolio of Taseen — A creative developer specializing in immersive 3D web experiences, interactive design, and modern web technologies.",
-  keywords: ["portfolio", "3D", "web developer", "creative", "Three.js", "React"],
-  authors: [{ name: "Taseen" }],
+    "Interactive 3D web experiences, WebGL shaders, spatial computing, and creative development showcase.",
+  keywords: ["portfolio", "3D", "web developer", "creative", "Three.js", "React Three Fiber", "WebGL"],
+  authors: [{ name: "Creative Developer" }],
   openGraph: {
-    title: "Taseen — Creative Developer & 3D Artist",
+    title: "Creative Developer & 3D Web Artist",
     description: "Crafting Digital Experiences in 3D",
     type: "website",
   },

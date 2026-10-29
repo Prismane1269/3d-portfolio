@@ -167,7 +167,7 @@ export default function Hero() {
           >
             <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] group-hover:scale-125 transition-transform" />
             <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent group-hover:from-cyan-300 group-hover:to-purple-400 transition-colors">
-              TASEEN
+              NEXUS
             </span>
           </a>
 

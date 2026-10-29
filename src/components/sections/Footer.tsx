@@ -53,7 +53,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 text-xl font-black tracking-widest text-white">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
-                TASEEN
+                NEXUS
               </span>
             </div>
             <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-sm">
@@ -95,7 +95,7 @@ export default function Footer() {
         {/* Bottom Bar: Copyright & Socials */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-400">
           <div>
-            © 2026 Taseen. All rights reserved.
+            © 2026 Creative 3D Studio. All rights reserved.
           </div>
 
           {/* Socials */}

@@ -79,7 +79,7 @@ export default function Contact() {
   });
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('taseen@example.com');
+    navigator.clipboard.writeText('hello@creative3d.dev');
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -340,7 +340,7 @@ export default function Contact() {
                       </svg>
                     </div>
                     <span className="text-xs sm:text-sm font-mono text-white group-hover:text-cyan-300 transition-colors">
-                      taseen@example.com
+                      hello@creative3d.dev
                     </span>
                   </div>
 

@@ -108,10 +108,10 @@ export default function LoadingScreen({
             Initializing System
           </div>
           <h1 className="text-4xl sm:text-5xl font-black tracking-tighter bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
-            TASEEN
+            NEXUS
           </h1>
           <p className="text-xs uppercase font-mono tracking-[0.25em] text-neutral-400 mt-2">
-            Creative 3D Portfolio
+            Creative 3D Studio
           </p>
         </div>
 
