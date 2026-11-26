@@ -52,7 +52,7 @@ Inspired by the full workflow tutorial for building cinematic AI and 3D web expe
 
 ```bash
 # Clone the repository
-git clone https://github.com/Prismane1269/3d-portfolio.git
+git clone https://github.com/Taseen-dev/3d-portfolio.git
 cd 3d-portfolio
 
 # Install dependencies
